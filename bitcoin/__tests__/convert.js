@@ -73,9 +73,20 @@ test('should allow untest aliases', () => {
   expect(convert(4.6, 'μBTC', 'bit')).toEqual(4.6);
 });
 
-test('should add an unit then remove it', () => {
+test('should add an unit', () => {
   convert.addUnit('dBTC', 0.1);
   expect(convert.units().includes('dBTC')).toBeTruthy();
+});
+
+test('should remove an unit', () => {
   convert.removeUnit('dBTC');
   expect(convert.units().includes('dBTC')).not.toBeTruthy();
+});
+
+test('should throw when adding already existing unit', () => {
+  expect(() => {convert.addUnit('mBTC', 0.01)}).toThrow();
+});
+
+test('should throw when removing default unit', () => {
+  expect(() => {convert.removeUnit('BTC')}).toThrow();
 });
